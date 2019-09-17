@@ -5,14 +5,13 @@ from selenium.common.exceptions import WebDriverException
 class NewVisitorTest(FunctionalTest):
 
 	def main(self): 
-		# Rian has heard about a cool new online to-do app.
+		# Rian has created his cool homepage.
 		# He goes to check out its homepage
 		self.browser.get(self.live_server_url)
 		
-		# he notices the page title and header mention to-do lists
-		self.assertIn('To-Do', self.browser.title) 
+		# he notices the page title and header mention homepage lists
+		self.assertIn('homepage', self.browser.title) 
 		
-		# he visits that URL - her to-do list is still there.
 		# Satisfied, he goes back to sleep
 		self.fail('Finish the test!')
 
