@@ -25,7 +25,7 @@ boto==2.49.0
 boto3==1.9.199
 botocore==1.12.199
 Bottleneck==1.2.1
-certifi==2018.11.29
+certifi==2019.6.16
 cffi==1.11.5
 chardet==3.0.4
 Click==7.0
@@ -174,6 +174,7 @@ pylint==2.2.2
 pyodbc==4.0.25
 pyOpenSSL==18.0.0
 pyparsing==2.1.10
+PyQt5==5.9.2
 PySocks==1.6.8
 pytest==4.0.2
 pytest-arraydiff==0.3
@@ -204,6 +205,7 @@ Send2Trash==1.5.0
 simplegeneric==0.8.1
 simplejson==3.16.0
 singledispatch==3.4.0.3
+sip==4.19.8
 six==1.10.0
 smart-open==1.8.4
 snowballstemmer==1.2.1
