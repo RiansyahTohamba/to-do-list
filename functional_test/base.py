@@ -1,14 +1,9 @@
-from django.test import LiveServerTestCase
 from selenium import webdriver
 import unittest
 
-import sys
-
-class FunctionalTest(LiveServerTestCase):
+class FunctionalTest(unittest.TestCase):
 
 	def setUp(self): 
-		options = Options()
-		options.add_argument('--headless')
 		self.browser = webdriver.Firefox(options=options)
 		self.browser.implicitly_wait(3)
 
