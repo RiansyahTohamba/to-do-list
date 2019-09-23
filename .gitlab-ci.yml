@@ -10,10 +10,8 @@ development:
         - python manage.py collectstatic --no-input
         - python manage.py runserver 8000 &
         - python manage.py migrate
-        - python manage.py collectstatic --no-input
     when: on_success
     script:
-        - python3 run_lint.py
         - coverage run --omit='manage.py' manage.py test --parallel --reverse
         - coverage report -m
 
