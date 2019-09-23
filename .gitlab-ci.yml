@@ -27,7 +27,7 @@ deployment:
         - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
         - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
         - heroku run --app $HEROKU_NAME migrate &
-        - python3 functional_tests.py
+        - python functional_tests.py
     environment:
         name: heroku
         url: $HEROKU_HOST
