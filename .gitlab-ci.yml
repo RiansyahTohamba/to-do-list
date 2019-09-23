@@ -1,0 +1,35 @@
+stages:
+  - test
+  - deploy
+
+unit_test:
+    image: python:3.7
+    stage: test
+    before_script:
+        - pip install -r requirements.txt
+        - python manage.py collectstatic --no-input
+        - python manage.py runserver 8000 &
+        - python manage.py migrate
+        - python manage.py collectstatic --no-input
+    when: on_success
+    script:
+        - python3 run_lint.py
+        - coverage run --omit='manage.py' manage.py test --parallel --reverse
+        - coverage report -m
+
+deployment:
+    image: ruby:latest
+    stage: deploy
+    before_script:
+        - gem install dpl
+        - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+    when: manual
+    allow_failure: false
+    script:
+        - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
+        - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
+        - heroku run --app $HEROKU_NAME migrate &
+        - python3 functional_tests.py
+    environment:
+        name: heroku
+        url: $HEROKU_HOST
