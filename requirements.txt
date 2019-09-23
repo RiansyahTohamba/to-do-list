@@ -1,0 +1,16 @@
+# App Requirements
+dj-database-url
+Django
+django-environ
+gunicorn
+psycopg2-binary
+pytz
+requests
+whitenoise
+
+# Test Requirements
+coverage
+pylint
+pylint-django
+selenium
+yapf
