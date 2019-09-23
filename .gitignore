@@ -2,3 +2,9 @@ db.sqlite3
 __pycache__
 *.pyc
 /bin
+/superlists/static
+/superlists/static/*
+/lib
+/include
+/share
+.coverage
