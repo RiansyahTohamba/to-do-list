@@ -1,7 +1,7 @@
 from selenium import webdriver
-import unittest
+from django.test import LiveServerTestCase
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 #
 	def setUp(self): #
 		self.browser = webdriver.Firefox()
@@ -10,10 +10,11 @@ class NewVisitorTest(unittest.TestCase):
 	def tearDown(self): #
 		self.browser.quit()
 
-	def test_can_start_a_list_and_retrieve_it_later(self): #
+	def test_homepage(self): #
 		# Rian has created a homepage
 		# He goes to check out its homepage
-		self.browser.get('http://localhost:8000')
+		self.browser.get(self.live_server_url)
+
 		# He notices the page title and header mention to-do lists
 		self.assertIn('Homepage', self.browser.title) #
 		self.fail('Finish the test!') #
