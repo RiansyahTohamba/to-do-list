@@ -1,47 +1,63 @@
-image: python:3.7
+services:
+  - postgres
 
-# stages:
-#   - test
-#   - deploy
+variables:
+  # Configure postgres service (https://hub.docker.com/_/postgres/)
+  POSTGRES_DB: custom_db
+  POSTGRES_USER: custom_user
+  POSTGRES_PASSWORD: custom_pass
 
-# development:
-#     image: python:3.7
-#     stage: test
+connect:
+  image: postgres
+  script:
+  # official way to provide password to psql: http://www.postgresql.org/docs/9.3/static/libpq-envars.html
+  - export PGPASSWORD=$POSTGRES_PASSWORD
+  - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
+
+# image: python:3.7
+
+# # stages:
+# #   - test
+# #   - deploy
+
+# # development:
+# #     image: python:3.7
+# #     stage: test
+# #     before_script:
+# #         - pip install -r requirements.txt
+# #         - python manage.py collectstatic --no-input
+# #         - python manage.py migrate
+# #     when: on_success
+# #     script:
+# #         - coverage run --omit='manage.py' manage.py test --parallel --reverse
+# #         - coverage report -m
+
+# deploy_staging:
+#     stage: deploy
 #     before_script:
-#         - pip install -r requirements.txt
-#         - python manage.py collectstatic --no-input
-#         - python manage.py migrate
-#     when: on_success
-#     script:
-#         - coverage run --omit='manage.py' manage.py test --parallel --reverse
-#         - coverage report -m
-
-deploy_staging:
-    stage: deploy
-    before_script:
-        - apt -qq update
-        - DEBIAN_FRONTEND=noninteractive apt -qq -y install xvfb firefox-esr 
-        # download geckodriver as no distro offers a package
-        - apt install -qq -y jq  # I don't want to parse JSON with regexes
-        - curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[].browser_download_url | select(contains("linux64"))' | xargs -n1 curl -sL | tar -xz -C /usr/local/bin
-        - chmod +x /usr/local/bin/geckodriver
-        # prepare Django installation
-        - python -m venv /opt/testing
-        # bundled pip and setuptools are outdated
-        - /opt/testing/bin/pip install --quiet --upgrade pip setuptools
-        - /opt/testing/bin/pip install --quiet -r requirements.txt
+#         - apt -qq update
+#         - DEBIAN_FRONTEND=noninteractive apt -qq -y install xvfb firefox-esr 
+#         # download geckodriver as no distro offers a package
+#         - apt install -qq -y jq  # I don't want to parse JSON with regexes
+#         - curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[].browser_download_url | select(contains("linux64"))' | xargs -n1 curl -sL | tar -xz -C /usr/local/bin
+#         - chmod +x /usr/local/bin/geckodriver
+#         # prepare Django installation
+#         - python -m venv /opt/testing
+#         # bundled pip and setuptools are outdated
+#         - /opt/testing/bin/pip install --quiet --upgrade pip setuptools
+#         - /opt/testing/bin/pip install --quiet -r requirements.txt
         
 
-        # - apt-get install -y ruby-dev
-        # - gem install dpl
-        # - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-    when: on_success
-    allow_failure: false
-    script:
-        # - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
-        # - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
-        # - heroku run --app $HEROKU_NAME migrate &
-        - xvfb-run /opt/testing/bin/python manage.py test functional_test.new_visitor_test        
-    environment:
-        name: heroku
-        url: $HEROKU_HOST
+#         # - apt-get install -y ruby-dev
+#         # - gem install dpl
+#         # - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+#     when: on_success
+#     allow_failure: false
+#     script:
+#         # - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
+#         # - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
+#         # - heroku run --app $HEROKU_NAME migrate &
+#         - xvfb-run /opt/testing/bin/python manage.py test functional_test.new_visitor_test        
+#     environment:
+#         name: heroku
+#         url: $HEROKU_HOST
