@@ -19,7 +19,7 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertIn('Homepage', self.browser.title) #
 		
 		# Satisfied, He goes back to sleep
-		browser.quit()
+		self.browser.quit()
 
 if __name__ == '__main__': #
 	unittest.main(warnings='ignore')
