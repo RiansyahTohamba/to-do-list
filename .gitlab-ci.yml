@@ -30,7 +30,7 @@ deploy_staging:
         # bundled pip and setuptools are outdated
         - /opt/testing/bin/pip install --quiet --upgrade pip setuptools
         - /opt/testing/bin/pip install --quiet -r requirements.txt
-        # - xvfb-run /opt/testing/bin/python manage.py test        
+        
 
         # - apt-get install -y ruby-dev
         # - gem install dpl
@@ -41,7 +41,7 @@ deploy_staging:
         # - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
         # - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
         # - heroku run --app $HEROKU_NAME migrate &
-        - python manage.py test functional_test.new_visitor_test
+        - xvfb-run /opt/testing/bin/python manage.py test functional_test.new_visitor_test        
     environment:
         name: heroku
         url: $HEROKU_HOST
