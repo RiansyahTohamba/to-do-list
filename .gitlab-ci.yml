@@ -1,15 +1,27 @@
 image: python:3.7
 
+# stages:
+#   - test
+#   - deploy
+
+# development:
+#     image: python:3.7
+#     stage: test
+#     before_script:
+#         - pip install -r requirements.txt
+#         - python manage.py collectstatic --no-input
+#         - python manage.py migrate
+#     when: on_success
+#     script:
+#         - coverage run --omit='manage.py' manage.py test --parallel --reverse
+#         - coverage report -m
+
 deploy_staging:
     stage: deploy
+    services:
+        - selenium/standalone-firefox    
     before_script:
-        - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-        - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
-        - apt-get update -qq && apt-get install -y -qq unzip
-        - apt-get install -y google-chrome-stable
-        - apt-get install -y xvfb
-        - wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
-        - unzip chromedriver_linux64.zip
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz;mkdir geckodriver; tar -xzf geckodriver-v0.25.0-linux64.tar.gz -C geckodriver; export PATH=$PATH:$PWD/geckodriver;
         - pip install -r requirements.txt
         - apt-get update -qy
         - apt-get install -y ruby-dev
