@@ -1,4 +1,4 @@
-image: python-selenium-firefox
+image: python:3.7
 
 # stages:
 #   - test
@@ -19,14 +19,25 @@ image: python-selenium-firefox
 deploy_staging:
     stage: deploy
     before_script:
-        - pip install -r requirements.txt
+        - apt -qq update
+        - DEBIAN_FRONTEND=noninteractive apt -qq -y install xvfb firefox-esr 
+        # download geckodriver as no distro offers a package
+        - apt install -qq -y jq  # I don't want to parse JSON with regexes
+        - curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[].browser_download_url | select(contains("linux64"))' | xargs -n1 curl -sL | tar -xz -C /usr/local/bin
+        - chmod +x /usr/local/bin/geckodriver
+        # prepare Django installation
+        - python -m venv /opt/testing
+        # bundled pip and setuptools are outdated
+        - /opt/testing/bin/pip install --quiet --upgrade pip setuptools
+        - /opt/testing/bin/pip install --quiet -r requirements.txt
+        # - xvfb-run /opt/testing/bin/python manage.py test        
+
         # - apt-get install -y ruby-dev
         # - gem install dpl
         # - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
     when: on_success
     allow_failure: false
     script:
-        - firefox
         # - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
         # - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
         # - heroku run --app $HEROKU_NAME migrate &
