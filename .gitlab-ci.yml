@@ -8,7 +8,7 @@ deployment:
         - apt-get install -y ruby-dev
         - gem install dpl
         - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-    when: manual
+    when: on_success
     allow_failure: false
     script:
         - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
