@@ -18,21 +18,26 @@ image: python:3.7
 
 deploy_staging:
     stage: deploy
-    services:
-        - selenium/standalone-firefox    
     before_script:
+        - apt-get update -yqqq
+        - apt-get install -yqq xvfb
+        - apt-get install iceweasel -yqq
+        - apt-get install dbus-x11 -yqq
+        - Xvfb :99 -screen 0 1280x720x24 -ac &
+        - export DISPLAY=:99
+        - export $(dbus-launch)
         - wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz;mkdir geckodriver; tar -xzf geckodriver-v0.25.0-linux64.tar.gz -C geckodriver; export PATH=$PATH:$PWD/geckodriver;
         - pip install -r requirements.txt
-        - apt-get update -qy
-        - apt-get install -y ruby-dev
-        - gem install dpl
-        - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+        # - apt-get update -qy
+        # - apt-get install -y ruby-dev
+        # - gem install dpl
+        # - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
     when: on_success
     allow_failure: false
     script:
-        - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
-        - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
-        - heroku run --app $HEROKU_NAME migrate &
+        # - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
+        # - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
+        # - heroku run --app $HEROKU_NAME migrate &
         - python manage.py test functional_test.new_visitor_test
     environment:
         name: heroku
