@@ -17,7 +17,6 @@ class NewVisitorTest(LiveServerTestCase):
 
 		# He notices the page title and header mention to-do lists
 		self.assertIn('Homepage', self.browser.title) #
-		self.fail('Finish the test!') #
 		
 		# Satisfied, He goes back to sleep
 		browser.quit()
