@@ -1,6 +1,6 @@
 image: python:3.7
 
-deployment:
+deploy_staging:
     stage: deploy
     before_script:
         - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -10,8 +10,7 @@ deployment:
         - apt-get install -y xvfb
         - wget https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
         - unzip chromedriver_linux64.zip
-        - pip install Django
-        - pip install django-environ
+        - pip install -r requirements.txt
         - apt-get update -qy
         - apt-get install -y ruby-dev
         - gem install dpl

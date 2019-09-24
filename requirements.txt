@@ -10,7 +10,5 @@ whitenoise
 
 # Test Requirements
 coverage
-pylint
-pylint-django
 selenium
 yapf
