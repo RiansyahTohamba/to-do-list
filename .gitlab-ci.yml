@@ -23,6 +23,7 @@ deployment:
     when: manual
     allow_failure: false
     script:
+        - pip install -r requirements.txt
         - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY_STAGING
         - export HEROKU_API_KEY=$HEROKU_API_KEY_STAGING
         - heroku run --app $HEROKU_NAME migrate &
