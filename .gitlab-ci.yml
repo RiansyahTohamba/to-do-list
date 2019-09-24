@@ -3,6 +3,7 @@ image: python:3.7
 deployment:
     stage: deploy
     before_script:
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.25.0/geckodriver-v0.25.0-linux64.tar.gz;mkdir geckodriver; tar -xzf geckodriver-v0.25.0-linux64.tar.gz -C geckodriver; export PATH=$PATH:$PWD/geckodriver;
         - pip install -r requirements.txt
         - apt-get update -qy
         - apt-get install -y ruby-dev
