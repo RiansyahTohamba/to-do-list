@@ -78,6 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'superlists.wsgi.application'
 
 PRODUCTION = os.environ.get('DATABASE_URL') != None
+DATABASES = {}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
