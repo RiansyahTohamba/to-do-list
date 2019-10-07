@@ -12,3 +12,4 @@ Test Isolasi menjamin tiap test tidak saling mempengaruhi satu sama lain test. D
 Pada exercise 3 terdapat kode "LiveServerTestCase" yang membantu dalam pembuatan database test dan menghapus database test jika test telah dilakukan.
 
 
+# Exercise Bab 7 : keterhubungan perubahan kode dengan materi Bab 7
