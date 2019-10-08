@@ -1,8 +1,10 @@
 from selenium import webdriver
 from django.test import LiveServerTestCase
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
 
+MAX_WAIT = 10
 
 class NewVisitorTest(LiveServerTestCase):
 #
