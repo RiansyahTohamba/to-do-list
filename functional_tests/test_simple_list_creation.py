@@ -4,14 +4,6 @@ from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(FunctionalTest):
 #
-
-	def add_list_item(self, item_text):
-		num_rows = len(self.browser.find_elements_by_css_selector('#id_list_table tr'))
-		self.get_item_input_box().send_keys(item_text)
-		self.get_item_input_box().send_keys(Keys.ENTER)
-		item_number = num_rows + 1
-		self.wait_for_row_in_list_table(f'{item_number}: {item_text}')
-
 	def check_comment(self, comment):
 		actual_comment = self.browser.find_element_by_id('personal_comment').text
 		self.assertIn(comment, actual_comment)
@@ -24,11 +16,11 @@ class NewVisitorTest(FunctionalTest):
 		# He notices the page title and header mention to-do lists
 		self.assertIn('Homepage', self.browser.title) #
 		
-		my_name = self.browser.find_element_by_tag_name('h1').text
+		my_name = self.browser.find_element_by_id('my_name').text
 		self.assertIn('Muhammad Riansyah Tohamba', my_name)
 
 
-		header_text = self.browser.find_element_by_tag_name('h2').text
+		header_text = self.browser.find_element_by_id('to_do_header').text
 		self.assertIn('To-Do', header_text)
 		
 		# no assignments at all, thereore show vacation comment
