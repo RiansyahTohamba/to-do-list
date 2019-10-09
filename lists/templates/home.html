@@ -1,19 +1,7 @@
-<html>
-	<head>
-		<title>Homepage</title>
-	</head>
-	<body>
-		<h1>Muhammad Riansyah Tohamba</h1>
-		<h2>My To-Do list</h2>
-		<form method="POST">
-			<input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
-			{% csrf_token %}
-		</form>
-		<table id="id_list_table">
-			{% for item in items %}
-				<tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
-			{% endfor %}
-		</table>
-		<p id="personal_comment"> {{ personal_comment }} </p>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Start a new To-Do list{% endblock %}
+
+{% block form_action %}{% url 'new_list' %}{% endblock %}
+
+
