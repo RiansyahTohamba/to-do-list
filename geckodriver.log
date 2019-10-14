@@ -776,3 +776,16 @@ JavaScript error: resource://gre/modules/osfile/osfile_async_front.jsm, line 424
 1571048658193	Marionette	WARN	TLS certificate errors will be ignored for this session
 [Parent 11082, Gecko_IOThread] WARNING: pipe error (64): Connection reset by peer: file /build/firefox-x_t4I3/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
 *** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1571057846391	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.BMedjf1moSGS"
+1571057848190	Marionette	INFO	Listening on port 38523
+1571057848202	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 12856, Gecko_IOThread] WARNING: pipe error (73): Connection reset by peer: file /build/firefox-x_t4I3/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1571057853070	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.DvUQY99kJQy3"
+1571057854905	Marionette	INFO	Listening on port 39981
+1571057855045	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 13048, Gecko_IOThread] WARNING: pipe error (73): Connection reset by peer: file /build/firefox-x_t4I3/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1571057859254	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.dqptqTBm0q3E"
+1571057861705	Marionette	INFO	Listening on port 33199
+1571057861767	Marionette	WARN	TLS certificate errors will be ignored for this session

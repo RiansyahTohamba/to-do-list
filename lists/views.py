@@ -8,6 +8,8 @@ def personal_comment(items):
 
 	if len(items) > 0 and len(items) < 5:	
 		personal_comment = 'sibuk tapi santai'
+	elif len(items) == 0:
+		personal_comment = 'yey, waktunya berlibur'
 	else:
 		personal_comment = 'oh tidak'
 
