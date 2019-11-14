@@ -6,39 +6,50 @@
 	    <link href="/static/base.css" rel="stylesheet">
 	</head>
 	<body>
-	     <div class="row">
-	        <div class="col-md-6 col-md-offset-3 jumbotron">
-	          <div class="text-center">
-				<h2 id="my_name">Muhammad Riansyah Tohamba</h2>
-	            <h2 id="to_do_header">{% block header_text %}{% endblock %}</h2>
-
-	            {% block list_form %}
-					<form method="POST" action="{% block form_action %}{% endblock %}">
-						<input name="item_text" id="id_new_item" class="form-control input-lg" placeholder="Enter a to-do item" />
+		<div class="container">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">Superlists</a>
+					<form class="navbar-form navbar-right" method="POST" action="#">
+						<span>Enter email to log in:</span>
+						<input class="form-control" name="email" type="text" />
 						{% csrf_token %}
-						{% if error %}
-							<div class="form-group has-error">
-								<span class="help-block">{{ error }}</span>
-							</div>
-						{% endif %}
 					</form>
-	            {% endblock %}
+				</div>
+			</nav>
+			<div class="row">
+		        <div class="col-md-6 col-md-offset-3 jumbotron">
+		          <div class="text-center">
+					<h2 id="my_name">Muhammad Riansyah Tohamba</h2>
+		            <h2 id="to_do_header">{% block header_text %}{% endblock %}</h2>
 
-	          </div>
-	        </div>
-	    </div>
-	    <div class="row">
-	        <div class="col-md-6 col-md-offset-3">
-	          {% block to_do_list_content %}
-	          {% endblock %}
-	        </div>
-	    </div>
+		            {% block list_form %}
+						<form method="POST" action="{% block form_action %}{% endblock %}">
+							<input name="item_text" id="id_new_item" class="form-control input-lg" placeholder="Enter a to-do item" />
+							{% csrf_token %}
+							{% if error %}
+								<div class="form-group has-error">
+									<span class="help-block">{{ error }}</span>
+								</div>
+							{% endif %}
+						</form>
+		            {% endblock %}
 
-		<div class="row">
-	        <div class="col-md-6 col-md-offset-3 text-center">
-				<h3 id="personal_comment"> {{ personal_comment }} </h3>
-	        </div>
-	    </div>
+		          </div>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="col-md-6 col-md-offset-3">
+		          {% block to_do_list_content %}
+		          {% endblock %}
+		        </div>
+		    </div>
 
+			<div class="row">
+		        <div class="col-md-6 col-md-offset-3 text-center">
+					<h3 id="personal_comment"> {{ personal_comment }} </h3>
+		        </div>
+		    </div>
+		</div>
 	</body>
 </html>
