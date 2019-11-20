@@ -22,4 +22,5 @@ Materi bab 7 mengajarkan kita bahwa test layout dan style bukan dimaksudkan untu
 Hubungan dengan perubahan import bootstrap dengan materi bab 7 adalah kita men-simulasikan jika bootstrap belum terupload. Hasilnya, melalui FT, programmer bisa mengetahui apakah bootstrap telah terupload dengan benar atau belum. 
 
 
-#
+# Perbedaan antara Manual Mocking dan menggunakan Mock library 
+Pada chapter 19, Manual Mocking dilakukan dengan meng-override method yang sudah dibuat oleh django dengan scope tertentu. Sedangkan dengan Mock Library, kita tinggal menggunakan method patch dari library untuk membuat mock pada kelas yang ingin kita mock
