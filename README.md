@@ -22,3 +22,4 @@ Materi bab 7 mengajarkan kita bahwa test layout dan style bukan dimaksudkan untu
 Hubungan dengan perubahan import bootstrap dengan materi bab 7 adalah kita men-simulasikan jika bootstrap belum terupload. Hasilnya, melalui FT, programmer bisa mengetahui apakah bootstrap telah terupload dengan benar atau belum. 
 
 
+#
