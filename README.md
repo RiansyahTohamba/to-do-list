@@ -24,3 +24,10 @@ Hubungan dengan perubahan import bootstrap dengan materi bab 7 adalah kita men-s
 
 # Perbedaan antara Manual Mocking dan menggunakan Mock library 
 Pada chapter 19, Manual Mocking dilakukan dengan meng-override method yang sudah dibuat oleh django dengan scope tertentu. Sedangkan dengan Mock Library, kita tinggal menggunakan method patch dari library untuk membuat mock pada kelas yang ingin kita mock
+
+
+# Perbedaan Functional Test pada ch. 20.1 vs ch. 18.3
+Functional Test pada ch. 20.1 sudah menggunakan pre-creating session dengan menggunakan .Selain itu, pada ch.20 juga sudah menggunakan cookie. Sehingga saat menjalankan FT, user tidak perlu authentifikasi lagi. Pada ch. 18.3 adalah masih belum menggunakan pre-creating session dan cookie sehingga kita harus melalui proses auth. tiap kali menjalankan FT.
+
+## Mengapa implementasi Functional Test untuk fitur login lebih baik menggunakan implementasi subbab 20.1 dibandingkan 18.3?
+Pada ch. 20, user tidak perlu melalui proses auth. lagi sehingga proses FT menjadi lebih cepat.
