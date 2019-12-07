@@ -30,4 +30,12 @@ Pada chapter 19, Manual Mocking dilakukan dengan meng-override method yang sudah
 Functional Test pada ch. 20.1 sudah menggunakan pre-creating session dengan menggunakan .Selain itu, pada ch.20 juga sudah menggunakan cookie. Sehingga saat menjalankan FT, user tidak perlu authentifikasi lagi. Pada ch. 18.3 adalah masih belum menggunakan pre-creating session dan cookie sehingga kita harus melalui proses auth. tiap kali menjalankan FT.
 
 ## Mengapa implementasi Functional Test untuk fitur login lebih baik menggunakan implementasi subbab 20.1 dibandingkan 18.3?
-Pada ch. 20, user tidak perlu melalui proses auth. lagi sehingga proses FT menjadi lebih cepat.
+Pada ch. 20, user tidak perlu melalui proses authentitakasi lagi sehingga proses FT menjadi lebih cepat.
+
+# Latihan 10 – Automating Deployment
+## Jelaskan permasalahan migrasi data pada chapter ini ?
+
+Permasalahannya terdapat pada data yang sudah diinput didalam basisdata. Data yang sudah ada pada basisdata tersebut menjadi bermasalah ketika kita menambah constraint baru, pada kasus ini constraint nya adalah text list pada table list_item tidak boleh duplikat.
+
+## Mengapa migrasi data ini dibutuhkan ?
+Data migrasi dibutuhkan untuk menyelesaikan masalah pada data yang sudah tersimpan di database sebelumnya. Pada kasus ini untuk menyelesaikan masalah yang ditimbulkan akibat mengenal constraint baru.
