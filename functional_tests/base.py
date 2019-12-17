@@ -10,16 +10,16 @@ import time
 MAX_WAIT = 10
 
 def wait(fn):
-    def modified_fn(*args, **kwargs):
-        start_time = time.time()
-        while True:
-            try:
-                return fn(*args, **kwargs)
-            except (AssertionError, WebDriverException) as e:
-                if time.time() - start_time > MAX_WAIT:
-                    raise e
-                time.sleep(0.5)
-    return modified_fn
+	def modified_fn(*args, **kwargs):
+		start_time = time.time()
+		while True:
+			try:
+				return fn(*args, **kwargs)
+			except (AssertionError, WebDriverException) as e:
+				if time.time() - start_time > MAX_WAIT:
+					raise e
+				time.sleep(0.5)
+	return modified_fn
 
 class FunctionalTest(StaticLiveServerTestCase):
 
@@ -40,9 +40,9 @@ class FunctionalTest(StaticLiveServerTestCase):
 		item_number = num_rows + 1
 		self.wait_for_row_in_list_table(f'{item_number}: {item_text}')
 		
-    @wait
-    def wait_for(self, fn):
-        return fn()
+	@wait
+	def wait_for(self, fn):
+		return fn()
 
 	@wait
 	def wait_for_row_in_list_table(self, row_text):
