@@ -1,10 +1,11 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 
 class List(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
+    	on_delete=models.DO_NOTHING)
     shared_with = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='shared_lists'
     )
@@ -28,7 +29,7 @@ class List(models.Model):
 
 class Item(models.Model):
     text = models.TextField(default='')
-    list = models.ForeignKey(List, default=None)
+    list = models.ForeignKey(List, default=None,on_delete=models.DO_NOTHING)
 
     class Meta:
         ordering = ('id',)
