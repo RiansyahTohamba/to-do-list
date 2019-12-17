@@ -1,6 +1,8 @@
-from django.core.exceptions import ValidationError
 from django.shortcuts import redirect,render
+from django.contrib.auth import get_user_model
 from lists.models import Item,List
+from lists.forms import ExistingListItemForm, ItemForm, NewListForm
+User = get_user_model()
 
 # Create your views here.
 
