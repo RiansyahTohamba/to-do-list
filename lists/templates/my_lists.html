@@ -8,7 +8,6 @@
 <!-- ini tidak dijalankan -->
     <h2>{{ owner.email }}'s lists</h2>
     <ul>
-        <li>sss{{ aku }}</li>
         {% for list in owner.list_set.all %}
             <li><a href="{{ list.get_absolute_url }}">{{ list.name }}</a></li>
         {% endfor %}
