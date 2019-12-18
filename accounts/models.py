@@ -13,6 +13,7 @@ class User(models.Model):
     USERNAME_FIELD = 'email'
     is_anonymous = False
     is_authenticated = True
+    is_active = True
 
 
 
