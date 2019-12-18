@@ -27,9 +27,6 @@ def add_item(request,list_id):
 	return redirect(f'/lists/{list_.id}/')
 
 
-def home_page(request):
-    return render(request, 'home.html', {'form': ItemForm()})
-
 
 def new_list(request):
     form = NewListForm(data=request.POST)
