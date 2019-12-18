@@ -5,14 +5,14 @@ from accounts.models import Token
 class SendLoginEmailViewTest(TestCase):
 
     def test_redirects_to_home_page(self):
-        response = self.client.post('/accounts/send_email', data={
+        response = self.client.post('/accounts/send_login_email', data={
             'email': 'rian@gmail.com'
         })
         self.assertRedirects(response, '/')
         
     @patch('accounts.views.send_mail')
     def test_sends_mail_to_address_from_post(self, mock_send_mail):
-        self.client.post('/accounts/send_email', data={
+        self.client.post('/accounts/send_login_email', data={
             'email': 'rian@gmail.com'
         })
 
@@ -23,14 +23,14 @@ class SendLoginEmailViewTest(TestCase):
         self.assertEqual(to_list, ['rian@gmail.com'])
 
     def test_creates_token_associated_with_email(self):
-        self.client.post('/accounts/send_email', data={
+        self.client.post('/accounts/send_login_email', data={
             'email': 'rian@gmail.com'
         })
         token = Token.objects.first()
         self.assertEqual(token.email, 'rian@gmail.com')
 
     def test_adds_success_message(self):
-        response = self.client.post('/accounts/send_email', data={
+        response = self.client.post('/accounts/send_login_email', data={
             'email': 'rian@gmail.com'
         }, follow=True)
 
@@ -44,7 +44,7 @@ class SendLoginEmailViewTest(TestCase):
 
     @patch('accounts.views.send_mail')
     def test_sends_link_to_login_using_token_uid(self, mock_send_mail):
-        self.client.post('/accounts/send_email', data={
+        self.client.post('/accounts/send_login_email', data={
             'email': 'rian@gmail.com'
         })
         token = Token.objects.first()
