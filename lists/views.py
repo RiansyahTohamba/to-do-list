@@ -7,25 +7,28 @@ User = get_user_model()
 # Create your views here.
 
 def personal_comment(items):
-	personal_comment = ''
+    personal_comment = ''
 
-	if len(items) > 0 and len(items) < 5:	
-		personal_comment = 'sibuk tapi santai'
-	elif len(items) == 0:
-		personal_comment = 'yey, waktunya berlibur'
-	else:
-		personal_comment = 'oh tidak'
+    if len(items) > 0 and len(items) < 5:	
+        personal_comment = 'sibuk tapi santai'
+    elif len(items) == 0:
+        personal_comment = 'yey, waktunya berlibur'
+    else:
+        personal_comment = 'oh tidak'
 
-	return personal_comment	
+    return personal_comment	
 
 def home_page(request):
-	return render(request, 'home.html',{'personal_comment' : 'yey, waktunya berlibur'})
+    return render(request, 'home.html',
+    {
+        'personal_comment' : 'yey, waktunya berlibur',
+        'form':ItemForm()
+    })
 
 def add_item(request,list_id):
-	list_ = List.objects.get(id=list_id)
-	Item.objects.create(text=request.POST['item_text'], list=list_)
-	return redirect(f'/lists/{list_.id}/')
-
+    list_ = List.objects.get(id=list_id)
+    Item.objects.create(text=request.POST['item_text'], list=list_)
+    return redirect(f'/lists/{list_.id}/')
 
 
 def new_list(request):
