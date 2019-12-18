@@ -27,54 +27,78 @@
 		              {% csrf_token %}
 		            </form>
 		          {% endif %}
-		        </div>				
-			</nav>
+		        </div>
+		    </nav>
 			{% if messages %}
-				<div class="row">
-					<div class="col-md-8">
-						{% for message in messages %}
-							{% if message.level_tag == 'success' %}
-								<div class="alert alert-success">{{ message }}</div>
-							{% else %}
-								<div class="alert alert-warning">{{ message }}</div>
-							{% endif %}
-						{% endfor %}
-					</div>
-				</div>
-			{% endif %}
+		        <div class="row">
+		          <div class="col-md-8">
+		            {% for message in messages %}
+		              {% if message.level_tag == 'success' %}
+		                <div class="alert alert-success">{{ message }}</div>
+		              {% else %}
+		                <div class="alert alert-warning">{{ message }}</div>
+		              {% endif %}
+		            {% endfor %}
+		          </div>
+		        </div>
+		    {% endif %}
+		    <!-- form -->
 			<div class="row">
 		        <div class="col-md-6 col-md-offset-3 jumbotron">
 		          <div class="text-center">
-					<h2 id="my_name">Muhammad Riansyah Tohamba</h2>
+		          	<h2 id="my_name">Muhammad Riansyah Tohamba</h2>
 		            <h2 id="to_do_header">{% block header_text %}{% endblock %}</h2>
 
 		            {% block list_form %}
-						<form method="POST" action="{% block form_action %}{% endblock %}">
-							<input name="item_text" id="id_new_item" class="form-control input-lg" placeholder="Enter a to-do item" />
-							{% csrf_token %}
-							{% if error %}
-								<div class="form-group has-error">
-									<span class="help-block">{{ error }}</span>
-								</div>
-							{% endif %}
-						</form>
+		              <form id="id_item_form" method="POST" action="{% block form_action %}{% endblock %}">
+		                {{ form.text }}
+		                {% csrf_token %}
+		                <div class="form-group has-error">
+		                  <div class="help-block">
+		                    {% if form.errors %}
+		                      {{ form.text.errors }}
+		                    {% endif %}
+		                  </div>
+		                </div>
+		              </form>
 		            {% endblock %}
 
 		          </div>
 		        </div>
 		    </div>
-		    <div class="row">
-		        <div class="col-md-6 col-md-offset-3">
-		          {% block to_do_list_content %}
-		          {% endblock %}
-		        </div>
-		    </div>
 
+			<!-- addition : personal comment -->
 			<div class="row">
 		        <div class="col-md-6 col-md-offset-3 text-center">
 					<h3 id="personal_comment"> {{ personal_comment }} </h3>
 		        </div>
 		    </div>
-		</div>
+
+			<div class="row">
+			    <div class="col-md-6 col-md-offset-3">
+			      {% block table %}
+			      {% endblock %}
+			    </div>
+			</div>
+
+			<div class="row">
+		        <div class="col-md-6 col-md-offset-3">
+		          {% block extra_content %}
+		          {% endblock %}
+		        </div>
+	    	</div>
+	    </div>
+
+	<script src="/static/jquery-3.1.1.min.js"></script>
+    <script src="/static/list.js"></script>
+
+    {% block scripts %}
+      <script>
+$(document).ready(function () {
+  window.Superlists.initialize();
+});
+      </script>
+    {% endblock scripts %}
+
 	</body>
 </html>
