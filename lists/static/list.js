@@ -4,9 +4,17 @@ window.Superlists.updateItems = function (url) {
   $.get(url).done(function (response) {
     if (!response.items) {return;}
     var rows = '';
-    for (var i=0; i<response.items.length; i++) {
+    var sizeItems = response.items.length
+    for (var i=0; i<sizeItems; i++) {
       var item = response.items[i];
       rows += '\n<tr><td>' + (i+1) + ': ' + item.text + '</td></tr>';
+    }
+    if (sizeItems > 0 && sizeItems < 5) {
+      $('#personal_comment').html('sibuk tapi santai');
+    }else if (sizeItems!=0) {
+      $('#personal_comment').html('oh tidak');
+    }else{
+      $('#personal_comment').html('yey, waktunya berlibur');
     }
     $('#id_list_table').html(rows);
   });
@@ -28,6 +36,7 @@ window.Superlists.initialize = function (params) {
         'text': form.find('input[name="text"]').val(),
         'csrfmiddlewaretoken': form.find('input[name="csrfmiddlewaretoken"]').val(),
       }).done(function () {
+        $('#id_new_item').val('');
         $('.has-error').hide();
         window.Superlists.updateItems(params.listApiUrl);
       }).fail(function (xhr) {
