@@ -65,9 +65,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'superlists.urls'
 
-TEST_COVER_PACKAGE = ['lists','accounts']
-TEST_COVERAGE_RESULT_HTML_DIR = 'test/backend'
-TEST_COVERAGE_RESULT_XML = 'test/backend/coverage.xml'
 
 TEMPLATES = [
     {
