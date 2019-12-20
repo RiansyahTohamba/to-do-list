@@ -97,25 +97,3 @@ class HomePageTest(TestCase):
         response = home_page(request) #
         content = response.content.strip().decode()
         self.assertIn('Muhammad Riansyah Tohamba', content)
-
-    def test_display_vacation_comment(self):
-        Item.objects.all().delete()
-        response = self.client.get('/')
-        self.assertIn('yey, waktunya berlibur', personal_comment(Item.objects.all()))
-
-    def test_display_busy_comment(self):
-        correct_list = List.objects.create()
-        Item.objects.create(text='itemey 1', list=correct_list)
-        Item.objects.create(text='itemey 2', list=correct_list)
-        response = self.client.get('/')
-        self.assertIn('sibuk tapi santai', personal_comment(Item.objects.all()))
-        
-    def test_display_oh_no_comment(self):
-        correct_list = List.objects.create()
-        tasks = ["tasks 1", "tasks 2", "tasks 3",'tasks 4','tasks 5']
-        for ta in tasks:
-            Item.objects.create(text=ta,list=correct_list)
-
-        response = self.client.get('/')
-        self.assertIn('oh tidak', personal_comment(Item.objects.all()))
-
