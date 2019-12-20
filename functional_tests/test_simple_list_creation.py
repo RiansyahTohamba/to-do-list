@@ -14,9 +14,11 @@ class NewVisitorTest(FunctionalTest):
 		self.browser.get(self.live_server_url)
 		# He notices the page title and header mention to-do lists
 		self.assertIn('Homepage', self.browser.title) #
-
-		my_name = self.browser.find_element_by_id('my_name').text
-		self.assertIn('Muhammad Riansyah Tohamba', my_name)
+		my_name = 'Muhammad Riansyah Tohamba'
+		header_name = self.browser.find_element_by_id('my_name_header').text
+		footer_name = self.browser.find_element_by_id('my_name_footer').text
+		self.assertIn(my_name, header_name)
+		self.assertIn(my_name, footer_name)
 
 
 		header_text = self.browser.find_element_by_id('to_do_header').text
