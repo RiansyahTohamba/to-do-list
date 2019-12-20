@@ -47,7 +47,7 @@
 			<div class="row">
 		        <div class="col-md-6 col-md-offset-3 jumbotron">
 		          <div class="text-center">
-		          	<h2 id="my_name">Muhammad Riansyah Tohamba</h2>
+		          	<h2 id="my_name_header">Muhammad Riansyah Tohamba</h2>
 		            <h2 id="to_do_header">{% block header_text %}{% endblock %}</h2>
 
 		            {% block list_form %}
@@ -82,13 +82,12 @@
 			    </div>
 			</div>
 
-			<div class="row">
-		        <div class="col-md-6 col-md-offset-3">
-		          {% block extra_content %}
-		          {% endblock %}
-		        </div>
-	    	</div>
 	    </div>
+	<div class="row">
+        <div class="blockquote-footer text-center">
+          Copy Right : <span id='my_name_footer'> Muhammad Riansyah Tohamba </span>
+        </div>
+	</div>
 
 	<script src="/static/jquery-3.1.1.min.js"></script>
     <script src="/static/list.js"></script>
