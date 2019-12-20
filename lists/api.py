@@ -1,14 +1,12 @@
 from lists.models import List, Item
-from lists.forms import (
-    EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR
-)
+from lists.forms import DUPLICATE_ITEM_ERROR
 from rest_framework import routers, serializers, viewsets
 from rest_framework.validators import UniqueTogetherValidator
 
 
 class ItemSerializer(serializers.ModelSerializer):
     text = serializers.CharField(
-        allow_blank=False, error_messages={'blank': EMPTY_ITEM_ERROR}
+        allow_blank=False
     )
 
     class Meta:
