@@ -11,6 +11,13 @@ def home_page(request):
         'form':ItemForm()
     })
 
+def finish_task(request, item_id):
+    item_updated = Item.objects.get(id=item_id)
+    item_updated.is_finish = True
+    item_updated.save()
+    list_ = List.objects.get(item=item_updated)
+    return redirect(list_)
+
 def new_list(request):
     form = NewListForm(data=request.POST)
     if form.is_valid():
@@ -35,10 +42,3 @@ def view_list(request, list_id):
 def my_lists(request, email):
     owner = User.objects.get(email=email)
     return render(request, 'my_lists.html', {'owner': owner})
-
-
-def share_list(request, list_id):
-    list_ = List.objects.get(id=list_id)
-    list_.shared_with.add(request.POST['sharee'])
-    return redirect(list_)
-
