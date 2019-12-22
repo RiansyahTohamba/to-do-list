@@ -11,7 +11,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'list', 'text')
+        fields = ('id', 'list', 'text','deadline','is_finish')
         validators = [
             UniqueTogetherValidator(
                 queryset=Item.objects.all(),
@@ -23,7 +23,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ListSerializer(serializers.ModelSerializer):
-    items = ItemSerializer(many=True, source='item_set')
+    items = ItemSerializer(many=True, source='not_finished')
 
     class Meta:
         model = List

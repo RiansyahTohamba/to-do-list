@@ -9,11 +9,14 @@ class ItemForm(forms.models.ModelForm):
 
     class Meta:
         model = Item
-        fields = ('text',)
+        fields = ('text','deadline',)
         widgets = {
             'text': forms.fields.TextInput(attrs={
                 'id': 'id_new_item',
                 'placeholder': 'Enter a to-do item',
+                'class': 'form-control input-lg',
+            }),
+            'deadline': forms.fields.DateInput(attrs={
                 'class': 'form-control input-lg',
             }),
         }
