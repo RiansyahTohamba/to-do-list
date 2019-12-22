@@ -40,7 +40,7 @@ Deployment:
     script:
         - export HEROKU_API_KEY=$HEROKU_API_KEY
         - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY
-        - heroku run --app $HEROKU_NAME migrate || true
+        - heroku run --app $HEROKU_NAME python manage.py migrate
     environment:
         name: heroku
         url: $HEROKU_HOST
