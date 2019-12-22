@@ -49,10 +49,13 @@
 		          <div class="text-center">
 		          	<h2 id="my_name_header">Muhammad Riansyah Tohamba</h2>
 		            <h2 id="to_do_header">{% block header_text %}{% endblock %}</h2>
-
+		            
 		            {% block list_form %}
 		              <form id="id_item_form" method="POST" action="{% block form_action %}{% endblock %}">
 		                {{ form.text }}
+		                <label>Set Deadline :</label>
+		                {{ form.deadline }}
+		                <input type="submit" class="btn btn-primary">
 		                {% csrf_token %}
 		                <div class="form-group has-error">
 		                  <div class="help-block">

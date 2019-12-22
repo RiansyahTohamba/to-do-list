@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
-{% block header_text %}Your To-Do list{% endblock %}
+{% block header_text %}
+	Your To-Do list
+{% endblock %}
 
 {% block table %}
-  <table id="id_list_table" class="table">
+  <table  class="table">
+  	<thead>
+  		<th>Tugas</th><th>Sisa Waktu</th><th>Aksi</th>
+  	</thead>
+  	<tbody id="id_list_table">
+  	</tbody>
   </table>
 
 {% endblock %}
