@@ -29,20 +29,21 @@ stages:
 #     - python manage.py test lists/test
 #     - python manage.py test accounts/test
 #     - coverage report -m
-
-Deploy:
-  image: ruby:2.4
-  stage: deploy
-  before_script:
-    - gem install dpl
-    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-  script:
-    - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY
-    - export HEROKU_API_KEY=$HEROKU_API_KEY
-    - heroku run --app $HEROKU_NAME migrate
-  environment:
-    name: production
-    url: $HEROKU_HOST
+Deployment:
+    image: ruby
+    stage: deploy
+    before_script:
+        - gem install dpl
+        - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+    when: on_success
+    allow_failure: true
+    script:
+        - export HEROKU_API_KEY=$HEROKU_API_KEY
+        - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY
+        - heroku run --app $HEROKU_NAME migrate || true
+    environment:
+        name: heroku
+        url: $HEROKU_HOST
 
 # FunctionalTest:
 #   image: python:3.6
