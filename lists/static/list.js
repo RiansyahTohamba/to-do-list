@@ -11,7 +11,7 @@ window.Superlists.updateItems = function (url) {
     var sizeItems = response.items.length
     for (var i=0; i<sizeItems; i++) {
       var item = response.items[i];
-      rows += '\n<tr><td>'+ item.is_finish +' ' + (i+1) + ': ' + item.text + '</td>';
+      rows += '\n<tr><td>' + (i+1) + ': ' + item.text + '</td>';
       rows += '<td>'+getTimeRemaining(item.deadline)+' hari lagi</td>';
       rows += '<td><a href="/lists/finish_task/'+item.id+'">Sudahi</a></td></tr>';
     }
