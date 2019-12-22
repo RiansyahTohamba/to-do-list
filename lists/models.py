@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
+from django.utils import timezone
 
 
 class List(models.Model):
@@ -13,6 +14,8 @@ class List(models.Model):
     def get_absolute_url(self):
         return reverse('view_list', args=[self.id])
 
+    def not_finished(self):
+        return self.item_set.filter(is_finish=False)
 
     @property
     def name(self):
@@ -29,6 +32,8 @@ class List(models.Model):
 
 class Item(models.Model):
     text = models.TextField(default='')
+    deadline = models.DateField(default=timezone.now)
+    is_finish = models.BooleanField(default=False)
     list = models.ForeignKey(List, default=None,on_delete=models.DO_NOTHING)
 
     class Meta:
@@ -38,4 +43,5 @@ class Item(models.Model):
 
     def __str__(self):
         return self.text
+
 
