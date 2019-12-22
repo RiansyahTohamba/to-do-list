@@ -1,3 +1,4 @@
+.versi_lama
 db.sqlite3
 geckodriver.log
 __pycache__

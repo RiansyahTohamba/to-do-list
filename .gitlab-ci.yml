@@ -1,38 +1,76 @@
 stages:
-  - test
+  - unit-test
   - deploy
+  - functional-test
 
-development:
-    image: python:3.7
-    stage: test
-    before_script:
-        - pip install -r requirements.txt
-        - python manage.py collectstatic --no-input
-        - python manage.py migrate
-    when: on_success
-    script:
-        - coverage run --omit='manage.py' manage.py test --parallel --reverse
-        - coverage report -m
+# UnitTest:
+#   image: python:3.6
+#   stage: unit-test
+#   before_script:
+#     - apt-get install -f
+#     - apt-get update -qy
+#     - apt-get install -y sudo postgresql postgresql-client libpq-dev libxss1 libappindicator1 libindicator7
+#     - python --version
+#     - apt-get install -y xvfb
+#     - service postgresql start
+#     - sudo -u $DB_DEFAULT_OWNER psql -c "CREATE USER $DB_USERNAME WITH PASSWORD '$DB_PASSWORD' CREATEDB"
+#     - sudo -u $DB_DEFAULT_OWNER psql -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME"
+#     - pip install --upgrade pip
+#     - pip install -r requirements.txt
+#     - pip install --upgrade --ignore-installed urllib3
+#     - coverage run --omit='manage.py' manage.py test lists/test
+#     - coverage run --omit='manage.py' manage.py test accounts/test
+#     - python manage.py makemigrations
+#     - python manage.py migrate
+#     - python manage.py collectstatic --no-input
+#     - python manage.py runserver 8000 &
+#   when: on_success
+#   script:
+#     - python manage.py test lists/test
+#     - python manage.py test accounts/test
+#     - coverage report -m
 
-deploy_staging:
-    image: python:3.7
-    stage: deploy
-    before_script:
-        - apt -qq update
-        - DEBIAN_FRONTEND=noninteractive apt -qq -y install xvfb firefox-esr 
-        # download geckodriver as no distro offers a package
-        - apt install -qq -y jq  # I don't want to parse JSON with regexes
-        - curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[].browser_download_url | select(contains("linux64"))' | xargs -n1 curl -sL | tar -xz -C /usr/local/bin
-        - chmod +x /usr/local/bin/geckodriver
-        # prepare Django installation
-        - python -m venv /opt/testing
-        # bundled pip and setuptools are outdated
-        - /opt/testing/bin/pip install --quiet --upgrade pip setuptools
-        - /opt/testing/bin/pip install --quiet -r requirements.txt
-    when: on_success
-    allow_failure: false
-    script:
-        - xvfb-run /opt/testing/bin/python manage.py test functional_test.new_visitor_test        
-    environment:
-        name: heroku
-        url: $HEROKU_HOST
+Deploy:
+  image: ruby:2.4
+  stage: deploy
+  before_script:
+    - gem install dpl
+    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+  script:
+    - dpl --provider=heroku --app=$HEROKU_NAME --api-key=$HEROKU_API_KEY
+    - export HEROKU_API_KEY=$HEROKU_API_KEY
+    - heroku run --app $HEROKU_NAME migrate
+  environment:
+    name: production
+    url: $HEROKU_HOST
+
+# FunctionalTest:
+#   image: python:3.6
+#   stage: functional-test
+#   before_script:
+#     - apt-get install -f
+#     - apt-get update -qy
+#     - apt-get install -y sudo postgresql postgresql-client libpq-dev libxss1 libappindicator1 libindicator7
+#     - python --version
+#     - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+#     - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+#     - apt-get update -qq && apt-get install -y -qq unzip
+#     - apt-get install -y google-chrome-stable
+#     - export CHROME_BIN=/usr/bin/google-chrome
+#     - google-chrome --version
+#     - apt-get install -y xvfb
+#     - wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip
+#     - unzip chromedriver_linux64.zip
+#     - service postgresql start
+#     - sudo -u $DB_DEFAULT_OWNER psql -c "CREATE USER $DB_USERNAME WITH PASSWORD '$DB_PASSWORD' CREATEDB"
+#     - sudo -u $DB_DEFAULT_OWNER psql -c "CREATE DATABASE $DB_NAME OWNER $DB_USERNAME"
+#     - pip install --upgrade pip
+#     - pip install -r requirements.txt
+#     - pip install --upgrade --ignore-installed urllib3
+#     - python manage.py makemigrations
+#     - python manage.py migrate
+#     - python manage.py collectstatic --no-input
+#     - python manage.py runserver 8000 &
+#   when: on_success
+#   script:
+#     - python manage.py test functional_tests
