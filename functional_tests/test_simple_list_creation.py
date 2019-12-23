@@ -40,7 +40,7 @@ class NewVisitorTest(FunctionalTest):
 
 		# When she hits enter, the page updates, and now the page lists
 		# "1: Buy peacock feathers" as an item in a to-do list table
-		inputbox.send_keys(Keys.ENTER)
+		self.get_btn_submit().send_keys(Keys.ENTER)
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
 		# number of task more than one and below five
