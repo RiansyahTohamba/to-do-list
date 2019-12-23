@@ -10,6 +10,9 @@ from lists.forms import (DUPLICATE_ITEM_ERROR,
 )
 from lists.models import Item, List
 from lists.views import new_list
+from django.utils import timezone
+from datetime import timedelta
+
 User = get_user_model()
 
 
@@ -29,18 +32,19 @@ class HomePageTest(TestCase):
 class NewListViewIntegratedTest(TestCase):
 
     def test_can_save_a_POST_request(self):
-        self.client.post('/lists/new', data={'text': 'A new list item'})
+        list_ = List.objects.create();
+        tommorow = timezone.now() + timedelta(1)
+        self.client.post(
+            '/api/items/',
+            data={
+                'list': list_.id,
+                'text': 'A new list item',
+                'deadline': tommorow.date(),
+            }
+        )        
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new list item')
-
-
-    def test_list_owner_is_saved_if_user_is_authenticated(self):
-        user = User.objects.create(email='a@b.com')
-        self.client.force_login(user)
-        self.client.post('/lists/new', data={'text': 'new item'})
-        list_ = List.objects.first()
-        self.assertEqual(list_.owner, user)
 
 
 
@@ -97,7 +101,6 @@ class ListViewTest(TestCase):
 
 
     def test_passes_correct_list_to_template(self):
-        other_list = List.objects.create()
         correct_list = List.objects.create()
         response = self.client.get(f'/lists/{correct_list.id}/')
         self.assertEqual(response.context['list'], correct_list)
@@ -111,11 +114,15 @@ class ListViewTest(TestCase):
 
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
-        other_list = List.objects.create()
         correct_list = List.objects.create()
+        tommorow = timezone.now() + timedelta(1)
         self.client.post(
-            f'/lists/{correct_list.id}/',
-            data={'text': 'A new item for an existing list'}
+            '/api/items/',
+            data={
+                'list': correct_list.id,
+                'text': 'A new item for an existing list',
+                'deadline': tommorow.date(),
+            }
         )
 
         self.assertEqual(Item.objects.count(), 1)
@@ -123,15 +130,6 @@ class ListViewTest(TestCase):
         self.assertEqual(new_item.text, 'A new item for an existing list')
         self.assertEqual(new_item.list, correct_list)
 
-
-    def test_POST_redirects_to_list_view(self):
-        other_list = List.objects.create()
-        correct_list = List.objects.create()
-        response = self.client.post(
-            f'/lists/{correct_list.id}/',
-            data={'text': 'A new item for an existing list'}
-        )
-        self.assertRedirects(response, f'/lists/{correct_list.id}/')
 
 
     def post_invalid_input(self):
@@ -183,27 +181,3 @@ class MyListsTest(TestCase):
         correct_user = User.objects.create(email='a@b.com')
         response = self.client.get('/lists/users/a@b.com/')
         self.assertEqual(response.context['owner'], correct_user)
-
-
-
-class ShareListTest(TestCase):
-
-    def test_sharing_a_list_via_post(self):
-        sharee = User.objects.create(email='share.with@me.com')
-        list_ = List.objects.create()
-        self.client.post(
-            f'/lists/{list_.id}/share',
-            {'sharee': 'share.with@me.com'}
-        )
-        self.assertIn(sharee, list_.shared_with.all())
-
-
-    def test_redirects_after_POST(self):
-        sharee = User.objects.create(email='share.with@me.com')
-        list_ = List.objects.create()
-        response = self.client.post(
-            f'/lists/{list_.id}/share',
-            {'sharee': 'share.with@me.com'}
-        )
-        self.assertRedirects(response, list_.get_absolute_url())
-
