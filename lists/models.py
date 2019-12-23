@@ -2,6 +2,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
 
 
 class List(models.Model):
@@ -32,7 +33,8 @@ class List(models.Model):
 
 class Item(models.Model):
     text = models.TextField(default='')
-    deadline = models.DateField(default=timezone.now)
+    tommorow = timezone.now() + timedelta(1)
+    deadline = models.DateField(default=tommorow.date())
     is_finish = models.BooleanField(default=False)
     list = models.ForeignKey(List, default=None,on_delete=models.DO_NOTHING)
 
